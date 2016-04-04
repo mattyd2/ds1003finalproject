@@ -1,7 +1,7 @@
 # This code is exploring and cleaning file asylum_clean.csv
 # This code is implementing a basic Log Reg as an optional baseline model for using simple input such as the features ’lawyer’ and ‘defensive’. The outcome is ‘grantraw’ 
 
-#Read the train data
+#Read the train data.
 import pandas as pd
 from numba import jit
 
