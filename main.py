@@ -7,7 +7,7 @@ from data_cleaning import Clean_Data
 
 def main():
     mergeWriteJudgeToClean()
-    Clean_Data()
+    Clean_Data(feature_keepcsv, decision_scheduling_merge_final_convertedcsv, data)
 
 if __name__ == "__main__":
     main()
