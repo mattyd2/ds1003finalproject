@@ -1,3 +1,6 @@
+# code used to get judge bios and calcuate average
+# grant rate for each judge
+
 import numpy as np
 import pandas as pd
 import os
@@ -7,14 +10,16 @@ import matplotlib.pyplot as plt
 def judgeAnalyzer(preppred_df):
     '''calls necessary functions to merge, group, and tokenize
     judge bio data.'''
+
     judgegrantrate = groupbybytracid(preppred_df)
     bioAndgrantrate = joinJudgeAndKey(judgegrantrate)
-    return b
+    return bioAndgrantrate
 
 
 def groupbybytracid(preppred_df):
     ''' Function used to calculate the grant rate of an individual judge
     and return an dataframe with tracid to be merged in subsequent stepes'''
+
     df = preppred_df[['tracid', 'appl_dec']].copy()
     df['appl_decion_value'] = np.nan
     df.loc[df.appl_dec == 'D', 'appl_decion_value'] = 0.
@@ -26,12 +31,18 @@ def groupbybytracid(preppred_df):
 
 
 def joinJudgeAndKey(judgegrantrate):
+    '''used to merge the judge files with the judge grant rate'''
+
     judgeDescripts = getJudgeFiles()
     judgeDescripts = judgeDescripts.merge(judgegrantrate, on='tracid')
     return judgeDescripts
 
 
 def getJudgeFiles():
+    '''used to collect the judge bios from individual .txt files
+    and then combine them into a single dataframe. could be modified
+    to combine another set of .txt files together.'''
+
     currntpath = os.path.dirname(os.path.realpath('__file__'))
     fdir = os.path.abspath(os.path.join(currntpath, os.pardir))
     directoryName = fdir+'/raw_data_dr_chen/bio/'
