@@ -2,6 +2,7 @@
 # replace some NaN values as a new categorical value,
 # drop features that are not part of the modeling,
 # code 'attorney_flag' not equals '1' as '0'
+#######test
 
 import pandas as pd
 import numpy as np
