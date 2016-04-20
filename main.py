@@ -5,7 +5,7 @@ from dataloader import loader
 from data_cleaning import clean_data
 from cleaning_data import make_dummies, make_history_features, make_time_features
 
-dict_of_groupbys = {('base_city_code',): [10,5,1], ('nat', 'base_city_code'): [10,5,1], ('nat', 'base_city_code'): [10,5,1], ('nat', 'c_asy_type', 'base_city_code'): [10,5,1], ('langid', 'c_asy_type', 'base_city_code'): [10,5,1]}
+dict_of_groupbys = {('nat', 'base_city_code'): 1, ('nat', 'c_asy_type', 'base_city_code'): 1, ('nat','langid', 'c_asy_type', 'base_city_code'): 1}
 
 
 categoricals = ['nat','case_type','appl_code','c_asy_type', 'base_city_code','hearing_loc_code','attorney_flag', 'schedule_type', 'langid']
@@ -15,6 +15,7 @@ def main():
     # put the full path name to these files
     features_to_keep = './cleaning_data/features_to_keep.txt'
 
+#    decision_scheduling_merge = './../data/dsmfc_short.csv'
     decision_scheduling_merge = './../data/decision_scheduling_merge_final_converted.csv'
 
     # clean the data
@@ -24,6 +25,8 @@ def main():
     # make features
     print 'Making history features add_history_features_to_courts_data'
     make_history_features.add_history_features_to_courts_data(courts_data,dict_of_groupbys)
+    courts_data.fillna(0,inplace=True)
+    print courts_data.head(6)
 
     print 'Making dummy features make_dummies'
     courts_data = make_dummies.make_dummies(courts_data, categoricals)
