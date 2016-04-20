@@ -1,17 +1,6 @@
 import pandas as pd
 import numpy as np
 
-### Read in all data and keep only allowed features
-
-raw_data = pd.read_csv('./../data/decision_scheduling_merge_final_converted.csv', nrows=10000)
-
-features_to_keep = pd.read_csv('features_to_keep.txt', header=None)
-features_to_keep = np.ravel(features_to_keep.values)
-
-courts_data = raw_data.loc[:, features_to_keep]
-
-
-
 
 ### Get recent history features
 
@@ -61,22 +50,19 @@ def add_history_features_to_courts_data(courts_data, dict_of_groupbys):
     Args:
         courts_data: dataframe of courts data
         dict_of_groupbys: A dictionary mapping tuples of groupby features to
-        the number of years to include for that set.
-            Ex: {('natid','base_city_code'):3, ('base_city_code'):1}
+        a list of number of years to include for that set.
+            Ex: {('natid','base_city_code'):[3,1], ('base_city_code'):[5,1]}
 
     Returns:
         None (note this mutates the input courts_data)
     '''
 
     for index, row in courts_data.iterrows():
-        for feature_set in dict_of_groupbys:
-            history = make_history_features(courts_data, feature_set, row, dict_of_groupbys[feature_set])
-            for feature in history.index:
-                courts_data.loc[index, feature] = history[feature]
+        for feature_set, list_of_n_years in dict_of_groupbys.items():
+            for n_years in list_of_n_years:
+                history = make_history_features(courts_data, feature_set, row, n_years)
+                for feature in history.index:
+                    courts_data.loc[index, feature] = history[feature]
         if index % 500 == 0:
             print 'Adding history features to record = %i' % (index)
     return
-
-dict_of_groupbys = {('nat','base_city_code'):3,('base_city_code',):1}
-add_history_features_to_courts_data(courts_data, dict_of_groupbys)
-

@@ -12,7 +12,6 @@ from numba import jit
 @jit
 def clean_data(features, decision_scheduling):
     data = Drop_Features(features, decision_scheduling)
-    data = NaN_Into_Code(data)
     data = Drop_Row_Value(['01', '06', '07', '02', '04'], 'case_type', data)
     return data
 
@@ -22,17 +21,6 @@ def Drop_Row_Value(values, feature, data):
     for i in values:
         data = data[data[feature] != i]
     return data
-
-
-@jit
-def NaN_Into_Code(data):
-    nan_features = ['attorney_flag', 'nat', 'c_asy_type', 'hearing_loc_code',
-                    'langid']
-    nan_codes = [0, 'ZZ', 'E_or_I', 'ZZZ', 000.]
-    for i in range(len(nan_features)):
-        data[nan_features[i]].fillna(nan_codes[i], inplace=True)
-    return data
-
 
 @jit
 def Drop_Features(features, decision_scheduling):
