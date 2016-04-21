@@ -41,8 +41,5 @@ def cleaner():
 def main():
     cleaner()
 
-    # bioAndgrantrate = judgeAnalyzer(df)
-    # analyzetext(df)
-
 if __name__ == "__main__":
     main()
