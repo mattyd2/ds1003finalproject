@@ -28,21 +28,20 @@ def add_history_features_to_courts_data(courts_data, dict_of_groupbys):
                 row_key = row_key[0]
 
             similar_cases = grouped.get_group(row_key)
+            for year in n_years:
+                similar_cases = similar_cases[similar_cases.comp_date < row['osc_date']]
+                similar_cases = similar_cases[similar_cases.comp_date >= (row['osc_date'] - 365*year)]
 
-            similar_cases = similar_cases[similar_cases.comp_date < row['osc_date']]
-            similar_cases = similar_cases[similar_cases.comp_date >= (row['osc_date'] - 365*n_years)]
+                dist_of_decisions = similar_cases.appl_dec.value_counts()
 
-            dist_of_decisions = similar_cases.appl_dec.value_counts()
+                string_features = "_and_".join(feature_set)
 
-            string_features = "_and_".join(feature_set)
+                dist_of_decisions.rename(lambda decision: '%s_%s_count_%i_years' % (string_features, decision, year), inplace=True)
 
-            dist_of_decisions.rename(lambda decision: '%s_%s_count_%i_years' \
-                             % (string_features, decision, n_years), inplace=True)
+                for i in dist_of_decisions.index:
+                    courts_data.loc[index,i] = dist_of_decisions[i]
 
-            for i in dist_of_decisions.index:
-                courts_data.loc[index,i] = dist_of_decisions[i]
-
-        if index % 500 == 0:
-            print 'Adding history features to record = %i' % (index)
+            if index % 1000 == 0:
+                print 'Adding history features to record = %i' % (index)
 
     return courts_data
