@@ -16,8 +16,8 @@ def loader():
 
 
 def filetoload():
-    # fileName = raw_input('What is the name of the file to be loaded?')
-    fileName = 'bioAndGrantRate.csv'
+    fileName = raw_input('What is the name of the file to be loaded?')
+    # fileName = 'bioAndGrantRate.csv'
     return fileName
 
 

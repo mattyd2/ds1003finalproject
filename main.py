@@ -8,10 +8,10 @@ from cleaning_data import make_dummies, make_history_features, make_time_feature
 dict_of_groupbys = {('nat', 'base_city_code'): [5,1], ('nat', 'c_asy_type', 'base_city_code'): [5,1], ('nat','langid', 'c_asy_type', 'base_city_code'): [5,1]}
 
 
-categoricals = ['nat','case_type','appl_code','c_asy_type', 'base_city_code','hearing_loc_code','attorney_flag', 'schedule_type', 'langid']
+categoricals = ['nat', 'case_type', 'appl_code', 'c_asy_type', 'base_city_code', 'hearing_loc_code','attorney_flag', 'schedule_type', 'langid']
 
 
-def main():
+def cleaner():
     # put the full path name to these files
     features_to_keep = './cleaning_data/features_to_keep.txt'
 
@@ -24,8 +24,8 @@ def main():
 
     # make features
     print 'Making history features add_history_features_to_courts_data'
-    make_history_features.add_history_features_to_courts_data(courts_data,dict_of_groupbys)
-    courts_data.fillna(0,inplace=True)
+    make_history_features.add_history_features_to_courts_data(courts_data, dict_of_groupbys)
+    courts_data.fillna(0, inplace=True)
     print courts_data.head(6)
 
     print 'Making dummy features make_dummies'
@@ -36,6 +36,10 @@ def main():
     make_time_features.make_hearing_half_hour(courts_data)
 
     courts_data.to_csv('./../data/cleaned_with_features.csv', index=False)
+
+
+def main():
+    cleaner()
 
 if __name__ == "__main__":
     main()
