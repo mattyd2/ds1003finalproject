@@ -19,6 +19,7 @@ def conflictMerger():
     # https://drive.google.com/open?id=0B-7pzj2oZ2Tja19PUTh6aTlBSjA
     raw_conflict = pd.read_csv('../conflict_data/gcri_data_v5.0.1.csv')
     raw_merged = pd.read_csv('../_decision_scheduling_merge_final_converted_1000.csv')
+    gdp = pd.read_csv('../gdp_data/gdp.csv')
     print "+_+_+_+_+ The data has been loaded successfuly +_+_+_+_+_ \n"
 
     # Prepare the nationality merge key
@@ -46,6 +47,15 @@ def conflictMerger():
     # Join raw_merged with conflict prepped on nat_app_year
     final_merged = pd.merge(raw_merged, conflict_prepped, on='nat_app_year', how='left')
     print "+_+_+_+_+ final data and conflict data have been merged +_+_+_+_+_ \n"
+    
+    # Merge the gdp with the final_merged
+    years = gdp.columns.tolist()[1:]
+    countries = gdp.index.tolist()
+    final_merged.insert(len(data.columns)-1, 'gdp', np.nan)
+    for place in countries:
+        for year in years:
+            final_merged['gdp'] = np.where((final_merged['nat']==place) & (final_merged['osc_year']==int(year)) , gdp[year][place], final_merged['gdp'])
+    
     return final_merged
 
 if __name__ == '__main__':
