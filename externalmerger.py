@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import re
 
 
 def conflictMerger():
@@ -15,12 +16,19 @@ def conflictMerger():
 
     # Read in the data
     # https://drive.google.com/open?id=0B-7pzj2oZ2TjUGl6dE1kdlF0MGs
-    raw = pd.read_csv('../raw_data_dr_chen/tblLookupNationality.csv')
+    raw = pd.read_csv('../data/tblLookupNationality.csv')
     # https://drive.google.com/open?id=0B-7pzj2oZ2Tja19PUTh6aTlBSjA
-    raw_conflict = pd.read_csv('../conflict_data/gcri_data_v5.0.1.csv')
-    raw_merged = pd.read_csv('../_decision_scheduling_merge_final_converted_1000.csv')
-    gdp = pd.read_csv('../gdp_data/gdp.csv')
+    raw_conflict = pd.read_csv('../data/gcri_data_v5.0.1.csv')
+    raw_merged = pd.read_csv('../data/cleaned_with_features.csv', nrows=10000)
+    raw_merged = raw_merged[raw_merged.osc_year >= 2000]
     print "+_+_+_+_+ The data has been loaded successfuly +_+_+_+_+_ \n"
+
+    #Add back in the NAT col to raw_merged
+
+    nat_col = [c for c in raw_merged.columns if re.match(r'nat_(([A-Z]{2})|(\?{2}))',c)]
+
+
+    raw_merged['nat'] = raw_merged[nat_col].idxmax(axis=1).apply(lambda x: x.strip('nat_').upper())
 
     # Prepare the nationality merge key
     nat_mergekey = raw[['??', 'UNKNOWN COUNTRY']]
@@ -44,19 +52,44 @@ def conflictMerger():
     conflict_prepped['nat_app_year'] = conflict_prepped.nat+conflict_prepped.YEAR.astype(str)
     raw_merged['nat_app_year'] = raw_merged.nat+raw_merged.osc_year.astype(str)
 
+
     # Join raw_merged with conflict prepped on nat_app_year
     final_merged = pd.merge(raw_merged, conflict_prepped, on='nat_app_year', how='left')
+
+    to_drop = [x for x in final_merged.columns if x.endswith('_y')]
+    final_merged.drop(to_drop, axis=1, inplace=True)
+
+    final_merged.rename(columns={'nat_x':'nat'}, inplace=True)
+
     print "+_+_+_+_+ final data and conflict data have been merged +_+_+_+_+_ \n"
-    
+
     # Merge the gdp with the final_merged
-    years = gdp.columns.tolist()[1:]
-    countries = gdp.index.tolist()
-    final_merged.insert(len(data.columns)-1, 'gdp', np.nan)
+
+    print "+_+_+_+_+ Merging GDP data +_+_+_+_+_ \n"
+
+
+    gdp = pd.read_csv('../data/gdp.csv')
+    years = gdp.columns[2:]
+    countries = gdp['nat']
+    final_merged.insert(final_merged.shape[0], 'gdp', np.nan)
     for place in countries:
         for year in years:
-            final_merged['gdp'] = np.where((final_merged['nat']==place) & (final_merged['osc_year']==int(year)) , gdp[year][place], final_merged['gdp'])
-    
-    return final_merged
+            if len(gdp.loc[gdp['nat'] == place,year].values) > 0:
+                final_merged.loc[np.logical_and((final_merged['nat']==place), (final_merged['osc_year']==int(year))), 'gdp'] = gdp.loc[gdp['nat'] == place,year].values[0]
+
+
+    final_merged.drop('nat', axis=1, inplace=True)
+
+
+    print "+_+_+_+_+ Merging bios  data +_+_+_+_+_ \n"
+
+    bios = pd.read_csv('../data/bios_clean2.csv', index_col=0)
+    final_merged = pd.merge(final_merged, bios, on='ij_code', how='left')
+
+    print len(final_merged)
+    print final_merged[['CORRUPT', 'gdp']].describe()
+
+    #final_merged.to_csv('./../data/merged_externals.csv', index=False)
 
 if __name__ == '__main__':
     conflictMerger()
