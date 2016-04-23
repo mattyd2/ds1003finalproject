@@ -36,6 +36,9 @@ def test_model(model, param_grid, scale = True):
         scaler.fit(X_train)
         X_train_scaled = scaler.transform(X_train)
 
+    elif scale == False:
+        X_train_scaled = X_train
+
     print 'Conducting grid search'
     np.random.seed(4590385)
     grid = GridSearchCV(model(), param_grid=param_grid, scoring='roc_auc',cv=5)
@@ -53,5 +56,5 @@ if __name__ == '__main__':
     grid = test_model(model, param_grid, scale = True)
 
     output = open('grid.pk1','wb')
-    pickle.dump(grid, ouput)
+    pickle.dump(grid, output)
     output.close()
