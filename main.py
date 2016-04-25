@@ -1,12 +1,13 @@
 # Authors Benjamin Ulrich Jakubowski, Matthew Dunn, Rafael, Rafael Garcia Cano Da Costa
 # Module used for program execution
 
+import pickle
 import numpy as np
 import pandas as pd
 import os
-from dataloader import loader
-from data_cleaning import clean_data
-from cleaning_data import make_dummies, make_history_features, make_time_features
+# from dataloader import loader
+# from data_cleaning import clean_data
+# from cleaning_data import make_dummies, make_history_features, make_time_features
 import model_setup as md
 import modeling_framework as mf
 
@@ -50,8 +51,10 @@ def cleaner():
 
 def modelfitting():
     pickled_model_name = 'grid_ada2.pk1'
-    hyperparm = md.adaboostsetup(pickled_model_name)
-    mf.make_learning_curve_from_gridsearchcsv(pickled_model_name, hyperparm)
+    hyperparm, grid = md.adaboostsetup(pickled_model_name)
+    pkl_file = open(pickled_model_name, 'rb')
+    model = pickle.load(pkl_file)
+    mf.make_learning_curve_from_gridsearchcsv(model, hyperparm)
 
 
 def main():

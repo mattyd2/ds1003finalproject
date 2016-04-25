@@ -16,10 +16,10 @@ def adaboostsetup(pickled_model_name):
     n_estimators = [400, 200, 100]
     param_grid = {'n_estimators': n_estimators, 'random_state': [4590385]}
 
-    grid_test_executor(model, param_grid, pickled_model_name)
+    grid = grid_test_executor(model, param_grid, pickled_model_name)
 
     # to be used in the learning curve plotting
-    return 'n_estimators'
+    return 'n_estimators', grid
 
 
 def svcsetup(pickled_model_name):
@@ -28,10 +28,10 @@ def svcsetup(pickled_model_name):
     Cs = [0.001, 0.01, 0.1, 1, 10, 100]
     param_grid = {'C': Cs}
 
-    grid_test_executor(model, param_grid, pickled_model_name)
+    grid = grid_test_executor(model, param_grid, pickled_model_name)
 
     # to be used in the learning curve plotting
-    return 'Cs'
+    return 'Cs', grid
 
 
 def grid_test_executor(model, param_grid, pickled_model_name):
@@ -41,3 +41,5 @@ def grid_test_executor(model, param_grid, pickled_model_name):
     output = open(pickled_model_name, 'wb')
     pickle.dump(grid, output)
     output.close()
+
+    return grid

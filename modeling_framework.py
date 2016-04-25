@@ -1,7 +1,6 @@
 # Authors Benjamin Ulrich Jakubowski, Matthew Dunn, Rafael, Rafael Garcia Cano Da Costa
 # Abstracted utilities for testing models
 
-import pickle
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,7 +25,7 @@ def test_model(model, param_grid, scale=True):
 
     print 'Reading training data'
 
-    train_data = pd.read_csv('./../data/final_data/train_small.csv')
+    train_data = pd.read_csv('./../data/final_data/train.csv')
 
     x_cols = np.setdiff1d(train_data.columns, ['appl_dec_G', 'appl_dec_D',
                                                'appl_dec_F', 'appl_dec_L'])
