@@ -1,5 +1,7 @@
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 def make_learning_curve_from_gridsearchcsv(model, hyperparm):
     '''
@@ -15,12 +17,13 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
     minus_sd = [np.mean(x[2]) - np.std(x[2]) for x in model.grid_scores_]
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
 
     ax.plot(model.param_grid[hyperparm], means, color='blue', lw=2)
-    ax.errorbar(model.param_grid[hyperparm], means,yerr=sds, fmt='o')
-    ax.fill_between(model.param_grid[hyperparm], plus_sd, minus_sd, facecolor='#F0F8FF', alpha=1.0, edgecolor='none')
-    ax.set_xscale('log')
+    ax.errorbar(model.param_grid[hyperparm], means, yerr=sds, fmt='o')
+    ax.fill_between(model.param_grid[hyperparm], plus_sd, minus_sd,
+                    facecolor='#F0F8FF', alpha=1.0, edgecolor='none')
+    # ax.set_xscale('log')
     ax.set_xlabel(hyperparm)
     ax.set_ylabel('ROC AUC')
     ax.set_title('Optimizing {} in Linear SVC\nAsylum Court Grant Decisions'.format(hyperparm))
@@ -28,8 +31,6 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
 
     return
 
-import pickle
-
-pkl_file = open('grid.pk1', 'rb')
+pkl_file = open('grid_ada2.pk1', 'rb')
 data1 = pickle.load(pkl_file)
-make_learning_curve_from_gridsearchcsv(data1, 'C')
+make_learning_curve_from_gridsearchcsv(data1, 'n_estimators')

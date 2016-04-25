@@ -1,21 +1,31 @@
+# Authors Benjamin Ulrich Jakubowski, Matthew Dunn, Rafael, Rafael Garcia Cano Da Costa
+# Module used for program execution
+
 import numpy as np
 import pandas as pd
 import os
 from dataloader import loader
 from data_cleaning import clean_data
 from cleaning_data import make_dummies, make_history_features, make_time_features
+import model_setup as md
+import modeling_framework as mf
 
-dict_of_groupbys = {('nat', 'base_city_code'): [5,1], ('nat', 'c_asy_type', 'base_city_code'): [5,1], ('nat','langid', 'c_asy_type', 'base_city_code'): [5,1]}
+
+dict_of_groupbys = {('nat', 'base_city_code'): [5, 1],
+                    ('nat', 'c_asy_type', 'base_city_code'): [5, 1],
+                    ('nat', 'langid', 'c_asy_type', 'base_city_code'): [5, 1]}
 
 
-categoricals = ['nat', 'case_type', 'appl_code', 'c_asy_type', 'base_city_code', 'hearing_loc_code','attorney_flag', 'schedule_type', 'langid']
+categoricals = ['nat', 'case_type', 'appl_code', 'c_asy_type',
+                'base_city_code', 'hearing_loc_code', 'attorney_flag',
+                'schedule_type', 'langid']
 
 
 def cleaner():
     # put the full path name to these files
     features_to_keep = './cleaning_data/features_to_keep.txt'
 
-#    decision_scheduling_merge = './../data/dsmfc_short.csv'
+    # decision_scheduling_merge = './../data/dsmfc_short.csv'
     decision_scheduling_merge = './../data/decision_scheduling_merge_final_converted.csv'
 
     # clean the data
@@ -38,8 +48,14 @@ def cleaner():
     courts_data.to_csv('./../data/cleaned_with_features.csv', index=False)
 
 
+def modelfitting():
+    pickled_model_name = 'grid_ada2.pk1'
+    hyperparm = md.adaboostsetup(pickled_model_name)
+    mf.make_learning_curve_from_gridsearchcsv(pickled_model_name, hyperparm)
+
+
 def main():
-    cleaner()
+    modelfitting()
 
 if __name__ == "__main__":
     main()
