@@ -51,7 +51,7 @@ def test_model(model, param_grid, scale=True):
     return grid
 
 
-def make_learning_curve_from_gridsearchcsv(model, hyperparm):
+def make_learning_curve_from_gridsearchcsv(model, hyperparm, model_type):
     '''
     Make learning curve from fit gridsearchcv sklearn object.
 
@@ -60,6 +60,7 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
         -hyperparm: string, hyperparameter to see learning curve for. Ex: from
         LinearSVC, 'C'
     '''
+    print "Plotting the AUC"
     means = [np.mean(x[2]) for x in model.grid_scores_]
     sds = [np.std(x[2]) for x in model.grid_scores_]
     plus_sd = [np.mean(x[2]) + np.std(x[2]) for x in model.grid_scores_]
@@ -75,7 +76,8 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
     # ax.set_xscale('log')
     ax.set_xlabel(hyperparm)
     ax.set_ylabel('ROC AUC')
-    ax.set_title('Optimizing {} in Linear SVC\nAsylum Court Grant Decisions'.format(hyperparm))
+    ax.set_title('Optimizing {} in '.format(hyperparm)+model_type+'\nAsylum Court Grant Decisions')
+    plt.savefig('Optimizing {} in '.format(hyperparm)+model_type+'.png')
     plt.show()
 
     return

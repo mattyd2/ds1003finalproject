@@ -11,9 +11,10 @@ from sklearn.tree import DecisionTreeClassifier
 
 def adaboostsetup(pickled_model_name):
     # This is for ada_boost
-    tdclf = DecisionTreeClassifier(max_depth=1)
+    tdclf = DecisionTreeClassifier(random_state=11, max_features="auto",
+                                   class_weight="balanced", max_depth=None)
     model = AdaBoostClassifier(base_estimator=tdclf)
-    n_estimators = [400, 200, 100]
+    n_estimators = [1000, 800, 600, 400, 300, 200, 100]
     param_grid = {'n_estimators': n_estimators, 'random_state': [4590385]}
 
     grid = grid_test_executor(model, param_grid, pickled_model_name)

@@ -49,16 +49,22 @@ def cleaner():
     courts_data.to_csv('./../data/cleaned_with_features.csv', index=False)
 
 
-def modelfitting():
-    pickled_model_name = 'grid_ada2.pk1'
+def modelfitting(pickled_model_name):
     hyperparm, grid = md.adaboostsetup(pickled_model_name)
+
+
+def modelplotting(pickled_model_name, hyperparm, model_type):
     pkl_file = open(pickled_model_name, 'rb')
     model = pickle.load(pkl_file)
-    mf.make_learning_curve_from_gridsearchcsv(model, hyperparm)
+    mf.make_learning_curve_from_gridsearchcsv(model, hyperparm, model_type)
 
 
 def main():
-    modelfitting()
+    pickled_model_name = 'grid_ada2.pk1'
+    hyperparm = 'n_estimators'
+    model_type = 'AdaBoost Decision Stump'
+    modelfitting(pickled_model_name)
+    modelplotting(pickled_model_name, hyperparm, model_type)
 
 if __name__ == "__main__":
     main()
