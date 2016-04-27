@@ -1,13 +1,10 @@
 from sklearn.cross_validation import cross_val_score
-from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.grid_search import GridSearchCV
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import pickle
 from atty_interactions import make_atty_interactions_df
-import sys
 
 def test_model(model, param_grid, scale = True, model_spec_function = 'Identity'):
     '''
@@ -53,31 +50,3 @@ def test_model(model, param_grid, scale = True, model_spec_function = 'Identity'
     grid.fit(X_train_scaled, y_train)
 
     return grid
-
-if __name__ == '__main__':
-
-    ### This is for my svc_model
-    model = LinearSVC
-    Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
-    param_grid = {'C': Cs}
-
-    """
-    First SVC Model:
-
-    grid = test_model(model, param_grid, scale = True)
-    output = open('svc1.pkl','wb')
-    pickle.dump(grid, output)
-    output.close()
-    """
-    """
-    Second SVC Model:
-    """
-
-    ##Needed for atty_interactions generation using Patsy
-    sys.setrecursionlimit(5000)
-
-    grid = test_model(model, param_grid, scale = True, model_spec_function = make_atty_interactions_df)
-
-    output = open('svc1_atty_interactions.pkl','wb')
-    pickle.dump(grid, output)
-    output.close()

@@ -1,13 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def make_learning_curve_from_gridsearchcsv(model, hyperparm):
+def make_learning_curve_from_gridsearchcsv(model, hyperparm, file_name):
     '''
     Make learning curve from fit gridsearchcv sklearn object.
 
     Args:
         -model: gridsearchcv object from sklearn
         -hyperparm: string, hyperparameter to see learning curve for. Ex: from LinearSVC, 'C'
+        -file_name: file name to save plot
     '''
     means = [np.mean(x[2]) for x in model.grid_scores_]
     sds = [np.std(x[2]) for x in model.grid_scores_]
@@ -24,12 +25,7 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
     ax.set_xlabel(hyperparm)
     ax.set_ylabel('ROC AUC')
     ax.set_title('Optimizing {} in Linear SVC\nAsylum Court Grant Decisions'.format(hyperparm))
+    plt.save_fig('{}.png'.format(filename))
     plt.show()
-
     return
 
-import pickle
-
-pkl_file = open('svc1_atty_interactions.pkl', 'rb')
-data1 = pickle.load(pkl_file)
-make_learning_curve_from_gridsearchcsv(data1, 'C')
