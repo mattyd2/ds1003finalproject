@@ -1,11 +1,10 @@
 import numpy as np
 import pandas as pd
 import os
-from dataloader import loader
 from data_cleaning import clean_data
 from cleaning_data import make_dummies, make_history_features, make_time_features
 
-dict_of_groupbys = {('nat', 'base_city_code'): [5,1], ('nat', 'c_asy_type', 'base_city_code'): [5,1], ('nat','langid', 'c_asy_type', 'base_city_code'): [5,1]}
+dict_of_groupbys = {('nat', 'base_city_code'): [5,1], ('nat', 'c_asy_type', 'base_city_code'): [5,1], ('nat','langid', 'c_asy_type', 'base_city_code'): [5,1]c
 
 
 categoricals = ['nat', 'case_type', 'appl_code', 'c_asy_type', 'base_city_code', 'hearing_loc_code','attorney_flag', 'schedule_type', 'langid']
