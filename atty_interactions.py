@@ -4,8 +4,6 @@ from numpy.linalg import matrix_rank
 import re
 import sys
 
-sys.setrecursionlimit(5000)
-
 def clean_col_names(col_name):
     col_name = col_name.replace(':','_')
     col_name = col_name.replace('**','2stars')
@@ -48,7 +46,7 @@ def make_atty_interactions_df(train_file_path):
 
     ##Specify model with interactions
 
-    X_columns = ' + '.join(train_data.columns - ['appl_dec_G'])
+    X_columns = ' + '.join(train_data.columns.difference(['appl_dec_G']))
 
     my_formula = '({})*attorney_flag_1'.format(X_columns)
 

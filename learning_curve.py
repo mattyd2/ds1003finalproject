@@ -30,6 +30,6 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm):
 
 import pickle
 
-pkl_file = open('grid.pk1', 'rb')
+pkl_file = open('svc1_atty_interactions.pkl', 'rb')
 data1 = pickle.load(pkl_file)
 make_learning_curve_from_gridsearchcsv(data1, 'C')
