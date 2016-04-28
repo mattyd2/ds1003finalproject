@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     ### This is for my RandomForestClassifier_model
     model = RandomForestClassifier
-    param_grid = {'n_estimators': [100, 300, 600, 900], 'criterion': ['entropy'], 'max_depth':[6]}
+    param_grid = {'n_estimators': [100, 300, 600, 900], 'criterion': ['entropy']}
 
     grid = test_model(model, param_grid, scale = True)
 
