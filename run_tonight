@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python -m RF_models
+python -m LR_models
+python -m svc_models
