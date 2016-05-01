@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     ## L1 reg with interactions feature set
     grid = test_model(model, param_grid, scale = True, model_spec_function = make_atty_interactions_df)
-    make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l2_log_reg_atty_interactions')
+    make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l1_log_reg_atty_interactions')
     output = open('l1_log_reg_atty_interactions.pk1','wb')
     pickle.dump(grid, output)
     output.close()
