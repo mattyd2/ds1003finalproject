@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     ### This is for my LogisticRegression_model
     model = LogisticRegression
-    Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
+    Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
     param_grid = {'C': Cs, 'penalty':'l2'}
 
     ## L2 reg with base feature set
