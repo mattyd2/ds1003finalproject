@@ -17,4 +17,7 @@ To train each module, use the bash command
 python -m <model_family_module>
 ```
 
+Note executing a model family module will:
+- Save a learning curve showing grid search over a relevant hyperparameter
+- Dump a pickled sklearn GridSearchCV object (to save results, since GridSearchCV training can take many hours to run)
 
