@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def make_learning_curve_from_gridsearchcsv(model, hyperparm, file_name):
+def make_learning_curve_from_gridsearchcsv(model, hyperparm, filename):
     '''
     Make learning curve from fit gridsearchcv sklearn object.
 

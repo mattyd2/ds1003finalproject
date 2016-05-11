@@ -10,8 +10,8 @@ if __name__ == '__main__':
 
     ### This is for my LogisticRegression_model
     model = LogisticRegression
-    Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
-    param_grid = {'C': Cs, 'penalty':['l2']}
+    Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    param_grid = {'C': Cs, 'penalty':'l2'}
 
     ## L2 reg with base feature set
     grid = test_model(model, param_grid, scale = True)
@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     ## L1 reg with interactions feature set
     grid = test_model(model, param_grid, scale = True, model_spec_function = make_atty_interactions_df)
-    make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l2_log_reg_atty_interactions')
+    make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l1_log_reg_atty_interactions')
     output = open('l1_log_reg_atty_interactions.pk1','wb')
     pickle.dump(grid, output)
     output.close()
