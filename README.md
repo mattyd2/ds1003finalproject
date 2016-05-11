@@ -5,6 +5,7 @@ Matthew Dunn, Rafael Garcia Cano Da Costa, and Benjamin Jakubowski
 This repository is for a final course project for NYU DS1003: Machine Learning and Computational Statistics. The objective of the project was to develop a predictive model to predict the outcome of US Immigration Court decisions on asylum applications. This repository contains code for
 - Data cleaning and merging
 - Model training, evaluation, and visualization.
+
 ## Usage
 First, note data cleaning and merging scripts are described in a separate README (in the cleaning_data subdirectory). Note the data cleaning code is not fully modular (TODO).
 
