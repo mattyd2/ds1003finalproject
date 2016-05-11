@@ -33,7 +33,7 @@ def make_atty_interactions_df(train_file_path):
 
     ##Read in training data and drop the multinomial targets
 
-    train_data = pd.read_csv(train_file_path, nrows=10000)
+    train_data = pd.read_csv(train_file_path)
 
     train_data.rename(columns = lambda x: x.replace(':','_'), inplace = True)
 

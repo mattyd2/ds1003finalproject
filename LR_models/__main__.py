@@ -11,7 +11,7 @@ if __name__ == '__main__':
     ### This is for my LogisticRegression_model
     model = LogisticRegression
     Cs = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100]
-    param_grid = {'C': Cs, 'penalty':'l2'}
+    param_grid = {'C': Cs, 'penalty':['l2']}
 
     ## L2 reg with base feature set
     grid = test_model(model, param_grid, scale = True)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     output.close()
 
     ## L1 reg with base feature set
-    param_grid = {'C': Cs, 'penalty':'l1'}
+    param_grid = {'C': Cs, 'penalty':['l1']}
 
     grid = test_model(model, param_grid, scale = True)
     make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l1_log_reg')
