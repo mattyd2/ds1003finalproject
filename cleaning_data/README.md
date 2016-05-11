@@ -4,7 +4,8 @@ Matthew Dunn, Rafael Garcia Cano Da Costa, and Benjamin Jakubowski
 ### Description:
 This subdirectory contains scripts for data cleaning and merging. Note this code base is not fully modular, and would benefit from refactoring (TODO). As such, instead of simply calling the ```main.py``` script, or executing as a module, the data was cleaned through sequential execution of the individual scripts in this directory.
 
-As such, the usage section in this README describes
+As such, the usage section in this README describes:
+
 1. The purpose/functionality of each cleaning script.
 2. The order of execution of the cleaning scripts.
 
@@ -27,9 +28,10 @@ Helper functions in these scripts are required by `main.py`, which is the **firs
 
 ### Second pass cleaning and merging
 
-After executing `main.py`, next execute `merge_judge.py`. This script is currently bloated- it was intended to simply merge in the clean judge bios, but following this merge a number of issues were identified with the resulting data set (which was indended to be consumed by sklearn model.fit methods). Thus, this script would benefit from refactoring (TODO).
+After executing `main.py`, the **second** cleaning and feature generation script is `merge_judge.py`. This script is currently bloated- it was intended to simply merge in the clean judge bios, but following this merge a number of issues were identified with the resulting data set (which was indended to be consumed by sklearn model.fit methods). Thus, this script would benefit from refactoring (TODO).
 
-As written, this script:
+As written, this script currently:
+
 1. Drops asylum application records with notice to appear before the year 2000.
 2. Merges the post-1999 asylum application data with the judge bios.
 3. Converts judge bio time features to years passed.
@@ -45,7 +47,7 @@ python main.py
 python merge_judge.py
 ```
 
-### archive
+### Archive
 Finally, in addition to the cleaning and merging scripts, cleaning_data contains a subdirectory archive, which contains unused code for
 - loading data
 - analyzing the raw judge bios (flat text files)
