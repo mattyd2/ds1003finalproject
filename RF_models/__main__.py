@@ -4,6 +4,7 @@ import pickle
 from modeling.atty_interactions import *
 from modeling.learning_curve import *
 from modeling.general_modeling_function import *
+from modeling.plot_auc import *
 
 if __name__ == '__main__':
 
@@ -13,7 +14,10 @@ if __name__ == '__main__':
     grid = test_model(model, param_grid, scale = True)
 
     make_learning_curve_from_gridsearchcsv(grid, 'n_estimators', 'learning_curve_RF10')
+    
 
     output = open('RF10.pk1','wb')
     pickle.dump(grid, output)
     output.close()
+    
+    plot_auc('./RF10.pk1', './test.csv', './train.csv', 'Random Forest')
