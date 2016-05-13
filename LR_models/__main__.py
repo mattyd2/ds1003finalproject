@@ -4,6 +4,7 @@ import pickle
 from modeling.atty_interactions import *
 from modeling.learning_curve import *
 from modeling.general_modeling_function import *
+from modeling.plot_auc import *
 
 
 if __name__ == '__main__':
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     output.close()
 
     ## L1 reg with base feature set
-    param_grid = {'C': Cs, 'penalty':'l1'}
+    param_grid = {'C': Cs, 'penalty':['l1']}
 
     grid = test_model(model, param_grid, scale = True)
     make_learning_curve_from_gridsearchcsv(grid, 'C', 'learning_curve_l1_log_reg')
@@ -46,3 +47,5 @@ if __name__ == '__main__':
     output = open('l1_log_reg_atty_interactions.pk1','wb')
     pickle.dump(grid, output)
     output.close()
+    
+    plot_auc('./l2_log_reg.pk1', './test.csv', './train.csv', 'LogReg')

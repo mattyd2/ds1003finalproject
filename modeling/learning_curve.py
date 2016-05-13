@@ -25,7 +25,6 @@ def make_learning_curve_from_gridsearchcsv(model, hyperparm, filename):
     ax.set_xlabel(hyperparm)
     ax.set_ylabel('ROC AUC')
     ax.set_title('Optimizing {} in Linear SVC\nAsylum Court Grant Decisions'.format(hyperparm))
-    plt.savefig('{}.png'.format(filename))
-    plt.show()
+    plt.savefig('{}.png'.format(file_name))
     return
 
