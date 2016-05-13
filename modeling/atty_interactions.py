@@ -35,14 +35,14 @@ def make_atty_interactions_df(train_file_path):
 
     train_data = pd.read_csv(train_file_path, nrows=10000)
 
-    train_data.rename(columns = lambda x: x.replace(':','_'), inplace = True)
+    train_data.rename(columns=lambda x: x.replace(':','_'), inplace = True)
 
     train_data.drop(['attorney_flag_0', 'appl_dec_D', 'appl_dec_F', 'appl_dec_L'], axis=1, inplace=True)
 
     ##Note the original dataset had column names with unnessary features
     ##Clean column names
 
-    train_data.rename(columns = lambda x: clean_col_names(x), inplace = True)
+    train_data.rename(columns=lambda x: clean_col_names(x), inplace = True)
 
     ##Specify model with interactions
 
