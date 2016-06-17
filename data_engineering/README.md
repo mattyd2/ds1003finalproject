@@ -18,9 +18,9 @@ As such, the usage section in this README describes:
 1. `bios_clean2.csv`
 2. `features_to_keep.text`
 3. `decision_scheduling_merge_final_converted.csv`
-4. `cleaned_with_features.csv`
-5. `train.csv`
-6. `test.csv`
+4. `cleaned_with_features.csv` - created by main.py
+5. `train.csv` - created by main.py
+6. `test.csv` - created by main.py
 
 ### Step 2
 #### Execute the following scripts
@@ -28,8 +28,8 @@ As such, the usage section in this README describes:
 1. `python main.py`
 2. `python merge_judge.py`
 
-## Notes:
-#### `merge_judge.py` is currently bloated- it was intended to simply merge in the clean judge bios, but following this merge a number of issues were identified with the resulting data set (which was indended to be consumed by sklearn model.fit methods). Thus, this script would benefit from refactoring (TODO).
+## TODO:
+#### `merge_judge.py` is currently bloated- it was intended to simply merge in the clean judge bios, but following this merge a number of issues were identified with the resulting data set (which was indended to be consumed by sklearn model.fit methods).
 
 As written, this script currently:
 
