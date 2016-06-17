@@ -1,3 +1,5 @@
+# author Rafael
+
 # drops 10 rows where 'case_type' has values not in master_case_type.csv
 # replace some NaN values as a new categorical value,
 # drop features that are not part of the modeling,
